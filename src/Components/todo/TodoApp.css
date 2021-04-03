@@ -10,4 +10,10 @@ button{
     
     }
 
+.WelcomeComponent{
+    text-align: center;   
+}
     
+.ErrorComponent{
+    text-align: center;   
+}

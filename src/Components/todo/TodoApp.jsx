@@ -1,15 +1,28 @@
 import React,{Component} from 'react'
 import './TodoApp.css';
+import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 class TodoApp extends Component{
 
     render()
     {
         return(
-            
+            <div className='TodoApp'>
+            <Router>
+                <Switch>
+                <Route path="/" exact component={LoginComponent}></Route>
+                <Route path="/login"  component={LoginComponent}></Route>
+                <Route path="/welcome/:name" component={WelcomeComponent}></Route>
+                <Route  component={ErrorComponent}></Route>
+                </Switch>
+            </Router>
 
-            <LoginComponent></LoginComponent>
 
+            {/* // <>
+            // <LoginComponent></LoginComponent>
+            // <WelcomeComponent></WelcomeComponent>
+            // </> */}
 
+            </div>
         );
     }
 
@@ -74,15 +87,32 @@ changeEvent=(event)=>
 
 loginClicked()
 {
-    if(this.state.username==='a' && this.state.username==='a')
+    if(this.state.username==='A' && this.state.username==='A')
     {
-        this.setState({hasLoginFailed:false,showSuccessMessage:true});
+
+        this.props.history.push(`/welcome/${this.state.username}`);
+       /// this.setState({hasLoginFailed:false,showSuccessMessage:true});
         console.log("success");
     }else{
-        this.setState({hasLoginFailed:true,showSuccessMessage:false});
+        this.props.history.push("/login");
+        //this.setState({hasLoginFailed:true,showSuccessMessage:false});
         console.log("failed");
     }
 }
+}
+class WelcomeComponent extends Component
+{
+    render(){
+        return (
+            <div className='WelcomeComponent'> Welcome {this.props.match.params.name}</div>
+        )
+    }
+}
+
+function ErrorComponent()
+{
+  return  ( <div className="ErrorComponent">Invalid URL Entered else contact support at xyz</div>)
+
 }
 
 
