@@ -5,6 +5,7 @@ import FirstComponent from './Components/learning-example/FirstComponent';
 import SecondComponent from './Components/learning-example/SecondComponent';
 import ThirdComponent from './Components/learning-example/ThirdComponent';
 import Counter from './Components/counter/Counter';
+import TodoApp from './Components/todo/TodoApp';
 
 // function App() {
 //   return (
@@ -34,13 +35,13 @@ class App extends Component
   render()
   {//code written in return part is jsx
     return(
-      
-      <>
-      <div className="App">     My Counter Application
- <br></br>
-      <Counter ></Counter>
-      </div>
-      </>
+      <TodoApp></TodoApp>
+      //<>
+      //<div className="App">     My Counter Application
+      //<br></br>
+      //<Counter ></Counter>
+     // </div>
+     // </>
       //<LearningComponents></LearningComponents>
     );
 
