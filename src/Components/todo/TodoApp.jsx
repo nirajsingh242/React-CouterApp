@@ -40,8 +40,11 @@ class LoginComponent extends Component
     {
         return(
             <div className="LoginComponent">
-                <ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}/>
-                <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/>
+                {this.state.hasLoginFailed && <div>login failed</div>}
+                {this.state.showSuccessMessage && <div>Successfull loggedin</div>}
+                {/* //commened below 2 lines becouse of no use as we got enhanced way to handle condition */}
+                {/* <ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}/> */}
+                {/* <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/> */}
                 Username  <input type="text" name="username" value={this.state.username} onChange={this.changeEvent} placeholder={this.state.usernameplaceholer}/>&nbsp;
                 Password  <input type="password" name="password" value={this.state.password} onChange={this.changeEvent}/>&nbsp;&nbsp;
                 <button type="submit" name="submit" onClick={this.loginClicked}>Login</button>
