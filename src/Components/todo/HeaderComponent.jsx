@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
-import './TodoApp.css';
-import './bootstrap.css';
-
 import {withRouter } from 'react-router'
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AuthenticationService from './AuthenticationService.js';
-
-
-
 
 class HeaderComponent extends Component {
     render() {
