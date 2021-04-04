@@ -17,3 +17,24 @@ button{
 .ErrorComponent{
     text-align: center;   
 }
+
+.TodoListComponent{
+    text-align: center; 
+    font-size:60px;
+    color:black ;
+   
+}
+table{
+    margin-left: auto;
+  margin-right: auto;
+  padding: 2%;
+}
+td{
+    background-color: lightgrey;
+    width: 220px;
+    border: 15px solid green;
+    padding: 20px;
+    margin: 10px;
+    text-size-adjust: 100px;
+}
+    

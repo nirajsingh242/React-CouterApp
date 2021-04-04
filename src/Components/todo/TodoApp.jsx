@@ -1,23 +1,23 @@
-import React,{Component} from 'react'
+import React, { Component } from 'react'
 import './TodoApp.css';
-import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
-class TodoApp extends Component{
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+class TodoApp extends Component {
 
-    render()
-    {
-        return(
+    render() {
+        return (
             <div className='TodoApp'>
-            <Router>
-                <Switch>
-                <Route path="/" exact component={LoginComponent}></Route>
-                <Route path="/login"  component={LoginComponent}></Route>
-                <Route path="/welcome/:name" component={WelcomeComponent}></Route>
-                <Route  component={ErrorComponent}></Route>
-                </Switch>
-            </Router>
+                <Router>
+                    <Switch>
+                        <Route path="/" exact component={LoginComponent}></Route>
+                        <Route path="/login" component={LoginComponent}></Route>
+                        <Route path="/welcome/:name" component={WelcomeComponent}></Route>
+                        <Route path="/todos" component={TodoListComponent}></Route>
+                        <Route component={ErrorComponent}></Route>
+                    </Switch>
+                </Router>
 
 
-            {/* // <>
+                {/* // <>
             // <LoginComponent></LoginComponent>
             // <WelcomeComponent></WelcomeComponent>
             // </> */}
@@ -30,112 +30,141 @@ class TodoApp extends Component{
 
 
 
-class LoginComponent extends Component
-{
-    constructor(props)
-    {
+class LoginComponent extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            usernameplaceholer:'username',
-            username:'',
-            password:'',
-            hasLoginFailed:false,
-            showSuccessMessage:false
+        this.state = {
+            usernameplaceholer: 'username',
+            username: '',
+            password: '',
+            hasLoginFailed: false,
+            showSuccessMessage: false
         }
-       // used arrow function so no use of binding
-      ///  this.handleUserNameChange=this.handleUserNameChange.bind(this);
+        // used arrow function so no use of binding
+        ///  this.handleUserNameChange=this.handleUserNameChange.bind(this);
         //this.handlePasswordChange=this.handlePasswordChange.bind(this);
-            //this.changeEvent=this.changeEvent.bind(this);
+        //this.changeEvent=this.changeEvent.bind(this);
 
-            this.loginClicked=this.loginClicked.bind(this);
+        this.loginClicked = this.loginClicked.bind(this);
     }
-    render()
-    {
-        return(
+    render() {
+        return (
             <div className="LoginComponent">
                 {this.state.hasLoginFailed && <div>login failed</div>}
                 {this.state.showSuccessMessage && <div>Successfull loggedin</div>}
                 {/* //commened below 2 lines becouse of no use as we got enhanced way to handle condition */}
                 {/* <ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}/> */}
                 {/* <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/> */}
-                Username  <input type="text" name="username" value={this.state.username} onChange={this.changeEvent} placeholder={this.state.usernameplaceholer}/>&nbsp;
-                Password  <input type="password" name="password" value={this.state.password} onChange={this.changeEvent}/>&nbsp;&nbsp;
+                Username  <input type="text" name="username" value={this.state.username} onChange={this.changeEvent} placeholder={this.state.usernameplaceholer} />&nbsp;
+                Password  <input type="password" name="password" value={this.state.password} onChange={this.changeEvent} />&nbsp;&nbsp;
                 <button type="submit" name="submit" onClick={this.loginClicked}>Login</button>
             </div>
 
         );
     }
-//commenting below chane eventt as we are making common function
-//     handleUserNameChange=(event)=>
-//     {
-//         //console.log(event.target.value);
-//             this.setState({ username: event.target.value})
-//    }
-//     handlePasswordChange=(event)=>
-//     {
-//         //console.log(event.target.value);
-//             this.setState({ password: event.target.value})
-//     }
+    //commenting below chane eventt as we are making common function
+    //     handleUserNameChange=(event)=>
+    //     {
+    //         //console.log(event.target.value);
+    //             this.setState({ username: event.target.value})
+    //    }
+    //     handlePasswordChange=(event)=>
+    //     {
+    //         //console.log(event.target.value);
+    //             this.setState({ password: event.target.value})
+    //     }
 
-//common change event
-changeEvent=(event)=>
-{
-   // console.log(event.target.name);
-    //console.log(event.target.value);
-    this.setState({ [event.target.name]:event.target.value })
-}
+    //common change event
+    changeEvent = (event) => {
+        // console.log(event.target.name);
+        //console.log(event.target.value);
+        this.setState({ [event.target.name]: event.target.value })
+    }
 
-loginClicked()
-{
-    if(this.state.username==='A' && this.state.username==='A')
-    {
+    loginClicked() {
+        if (this.state.username === 'A' && this.state.password === 'A') {
 
-        this.props.history.push(`/welcome/${this.state.username}`);
-       /// this.setState({hasLoginFailed:false,showSuccessMessage:true});
-        console.log("success");
-    }else{
-        this.props.history.push("/login");
-        //this.setState({hasLoginFailed:true,showSuccessMessage:false});
-        console.log("failed");
+            this.props.history.push(`/welcome/${this.state.username}`);
+            /// this.setState({hasLoginFailed:false,showSuccessMessage:true});
+            console.log("success");
+        } else {
+            this.props.history.push("/login");
+            //this.setState({hasLoginFailed:true,showSuccessMessage:false});
+            console.log("failed");
+        }
     }
 }
+
+class TodoListComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            todos: [{ id: 1, description: 'learning React by Saatvik Sir' },
+            { id: 2, description: 'learning SpringBoot Saatvik Sir' },
+            { id: 3, description: 'learning SQL by Dhir Sir' },
+            { id: 4, description: 'learning CSS (Self)' }]
+        }
+    }
+    render() {
+        return (
+            <>
+                <div className='TodoListComponent'> Todo List</div>
+                <table>
+                    <thead>
+                        <th>Id</th>
+                        <th>Description</th>
+                    </thead>
+                    <tbody>
+                        {
+                            this.state.todos.map(
+
+                                todo =>
+                                    <tr>
+                                        <td>{todo.id}</td>
+                                        <td>{todo.description}</td>
+                                    </tr>
+                            )
+
+
+                        }
+                    </tbody>
+
+                </table>
+            </>
+        )
+    }
 }
-class WelcomeComponent extends Component
-{
-    render(){
+
+class WelcomeComponent extends Component {
+    render() {
         return (
             <div className='WelcomeComponent'> Welcome {this.props.match.params.name}</div>
         )
     }
 }
 
-function ErrorComponent()
-{
-  return  ( <div className="ErrorComponent">Invalid URL Entered else contact support at xyz</div>)
+function ErrorComponent() {
+    return (<div className="ErrorComponent">Invalid URL Entered else contact support at xyz</div>)
 
 }
 
 
 //function component for auth(failed)
-function ShowInvalidCredentials(props)
-{
-if(props.hasLoginFailed)
-{
-    return   <div>login failed</div>;
-}
+function ShowInvalidCredentials(props) {
+    if (props.hasLoginFailed) {
+        return <div>login failed</div>;
+    }
 
-return null;
+    return null;
 }
 
 
 //function component for auth(success)
-function ShowLoginSuccessMessage(props)
-{
-if(props.showSuccessMessage)
-{
-    return    <div>Successfull loggedin</div>
-}
+function ShowLoginSuccessMessage(props) {
+    if (props.showSuccessMessage) {
+        return <div>Successfull loggedin</div>
+    }
 
-return null;
+    return null;
 }
 export default TodoApp;
