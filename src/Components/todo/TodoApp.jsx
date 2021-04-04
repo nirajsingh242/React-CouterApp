@@ -1,25 +1,33 @@
+import logo from './logo.svg';
 import React, { Component } from 'react'
 import './TodoApp.css';
 import './bootstrap.css';
 
+import { withRouter } from 'react-router'
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import AuthenticationService from './AuthenticationService.js';
+import HeaderComponent from './HeaderComponent'
+import AuthenticatedRoute from './AuthenticatedRoute';
 class TodoApp extends Component {
 
     render() {
         return (
             <div className='TodoApp'>
                 <Router>
-                    <HeaderComponent></HeaderComponent>
-                    <Switch>
-                        <Route path="/" exact component={LoginComponent}></Route>
-                        <Route path="/login" component={LoginComponent}></Route>
-                        <Route path="/welcome/:name" component={WelcomeComponent}></Route>
-                        <Route path="/todos" component={TodoListComponent}></Route>
-                        <Route path="/logout" component={LogoutComponent}></Route>
+                    <>
+                        <HeaderComponent />
+                        <Switch>
+                            <Route path="/reactLearning" exact component={ReactLearning}></Route>
+                            <Route path="/" exact component={LoginComponent}></Route>
+                            <Route path="/login" component={LoginComponent}></Route>
+                            <AuthenticatedRoute path="/welcome/:name" component={WelcomeComponent}></AuthenticatedRoute>
+                            <AuthenticatedRoute path="/todos" component={TodoListComponent}></AuthenticatedRoute>
+                            <AuthenticatedRoute path="/logout" component={LogoutComponent}></AuthenticatedRoute>
 
-                        <Route component={ErrorComponent}></Route>
-                    </Switch>
-                    <FooterComponent></FooterComponent>
+                            <Route component={ErrorComponent}></Route>
+                        </Switch>
+                        <FooterComponent />
+                    </>
                 </Router>
 
 
@@ -93,10 +101,11 @@ class LoginComponent extends Component {
 
     loginClicked() {
         if (this.state.username === 'A' && this.state.password === 'A') {
+            AuthenticationService.registerSccessfullLogin(this.state.username, this.state.password);
 
             this.props.history.push(`/welcome/${this.state.username}`);
             /// this.setState({hasLoginFailed:false,showSuccessMessage:true});
-            console.log("success");
+            //console.log("success");
         } else {
             this.props.history.push("/login");
             this.setState({ hasLoginFailed: true, showSuccessMessage: false });
@@ -122,17 +131,19 @@ class TodoListComponent extends Component {
                 <div className="container">
                     <table className="table">
                         <thead>
-                            {/* <th>Id</th> */}
-                            <th>Description</th>
-                            <th>Target Date</th>
-                            <th>Is Completed ?</th>
+                            <tr>
+                                {/* <th>Id</th> */}
+                                <th>Description</th>
+                                <th>Target Date</th>
+                                <th>Is Completed ?</th>
+                            </tr>
                         </thead>
                         <tbody>
                             {
                                 this.state.todos.map(
 
                                     todo =>
-                                        <tr>
+                                        <tr key={todo.id}>{/*solves issue of console unique key*/}
                                             {/* <td>{todo.id}</td> */}
                                             <td >{todo.description}</td>
                                             <td>{todo.targetDate.toString()}</td>
@@ -152,36 +163,12 @@ class TodoListComponent extends Component {
 }
 
 
-class HeaderComponent extends Component {
-    render() {
-        return (
-            <header>
-                <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                    <div className="navbar-brand">
-                        <a href="/">React Todo App Link </a>
-                    </div>
-                    <ul className="navbar-nav">
-                        <li className="nav-link"><Link className="" to="/welcome">Home</Link></li>
-                        <li className="nav-link"><Link className="" to="/todos">Todos</Link></li>
-                    </ul>
-                    <ul className="navbar-nav navbar-collapse justify-content-end">
-                        <li className="nav-link"><Link className="" to="/login"> Login</Link></li>
-                        <li className="nav-link"><Link className="" to="/logout">Logout</Link></li>
-                    </ul>
-                </nav>
-
-            </header>
-
-        )
-    }
-}
-
 class FooterComponent extends Component {
     render() {
         return (
             <div className="FooterComponent">
                 <footer className="footer">
-                    <span className="text-muted">All right Reserved @Satvik Sir</span>
+                    <span className="text-muted">All right Reserved @Niraj Singh</span>
                 </footer>
             </div>
 
@@ -213,6 +200,20 @@ class WelcomeComponent extends Component {
 
         )
     }
+}
+class ReactLearning extends Component {
+    render() {
+        return (
+            <div className="App-header">
+                <img src={logo} className="App-logo" alt="logo" />
+                <p>
+                    Welcome to <code>React Learning</code> Demo Code.
+                </p>
+            </div>
+
+        )
+    }
+
 }
 
 function ErrorComponent() {
