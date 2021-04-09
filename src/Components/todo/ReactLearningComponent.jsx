@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import logo from './logo.svg';
+import logo from '../../../src/logo.svg';
 
 class ReactLearningComponent extends Component {
     render() {
