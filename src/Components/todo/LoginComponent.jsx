@@ -60,17 +60,29 @@ class LoginComponent extends Component {
     }
 
     loginClicked() {
-        if (this.state.username === 'A' && this.state.password === 'A') {
-            AuthenticationService.registerSccessfullLogin(this.state.username, this.state.password);
+        // if (this.state.username === 'A' && this.state.password === 'A') {
+        //     AuthenticationService.registerSccessfullLogin(this.state.username, this.state.password);
 
-            this.props.history.push(`/welcome/${this.state.username}`);
-            /// this.setState({hasLoginFailed:false,showSuccessMessage:true});
-            //console.log("success");
-        } else {
-            this.props.history.push("/login");
-            this.setState({ hasLoginFailed: true, showSuccessMessage: false });
-            console.log("failed");
-        }
+        //     this.props.history.push(`/welcome/${this.state.username}`);
+        //     /// this.setState({hasLoginFailed:false,showSuccessMessage:true});
+        //     //console.log("success");
+        // } else {
+        //     this.props.history.push("/login");
+        //     this.setState({ hasLoginFailed: true, showSuccessMessage: false });
+        //     console.log("failed");
+        // }
+
+        AuthenticationService
+        .executeBasicAuthenticationService(this.state.username, this.state.password)
+        .then(() => {
+            AuthenticationService.registerSccessfullLogin(this.state.username,this.state.password)
+            this.props.history.push(`/welcome/${this.state.username}`)
+        }).catch( () =>{
+            this.setState({showSuccessMessage:false})
+            this.setState({hasLoginFailed:true})
+        })
+            
+
     }
 }
 export default LoginComponent;

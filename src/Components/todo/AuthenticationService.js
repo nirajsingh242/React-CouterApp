@@ -1,8 +1,22 @@
+import axios from "axios";
+
 class AuthenticationService{
-registerSccessfullLogin(username,password)
+
+    
+    executeBasicAuthenticationService(username, password) {
+        return axios.get('http://localhost:8080/basicauth', 
+            {headers: {authorization: this.createBasicAuthToken(username,password)}})
+    }
+
+    createBasicAuthToken(username,password) {
+        return 'Basic ' +  window.btoa(username + ":" + password)
+    }
+
+    registerSccessfullLogin(username,password)
 {
     sessionStorage.setItem('AuthenticatedUser',username);
     console.log("Authenticated "+username);
+    this.setupAxiosInterceptors(this.createBasicAuthToken(username,password));
 }
 
 logout()
@@ -31,6 +45,19 @@ getLoggedInUser()
     }
 
     return user;
+}
+
+setupAxiosInterceptors(basicAuthHeader) {
+
+    axios.interceptors.request.use(
+        (config) => {
+            if(this.isUserLoggedIn()) {
+                config.headers.authorization = basicAuthHeader
+               
+            }
+            return config
+        }
+    )
 }
 
 }

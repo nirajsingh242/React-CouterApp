@@ -35,8 +35,8 @@ class TodoListComponent extends Component {
         let username=AuthenticationService.getLoggedInUser();
         console.log(username+ " with id as "+id);
         TodoDataServiceService.deleteTodo(username,id)
-        .then(response => this.setState({message:`Delete of user with ${id} is successful`}),
-        this.refreshTodos())
+        .then(response => {this.setState({message:`Delete of user with ${id} is successful`})
+        this.refreshTodos()})
         .catch(error=> this.setState({message:`Delete of user with ${id} is unsuccessful`}))
 
     }
