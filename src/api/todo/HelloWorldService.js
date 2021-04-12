@@ -24,6 +24,7 @@ class HelloWorldService
 
         let username='A';
         let pass='B';
+        
        
         let basicAuthHeader = 'Basic ' + window.btoa(username+":"+pass);
           //console.log("executeHelloWorldService executed");
